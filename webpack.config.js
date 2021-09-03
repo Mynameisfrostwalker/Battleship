@@ -6,6 +6,7 @@ module.exports = {
   mode: "development",
   entry: {
     index: "./src/scripts/index.js",
+    ship: "./src/scripts/ship.js",
   },
   devtool: "inline-source-map",
   plugins: [
