@@ -43,6 +43,7 @@ const createGameboard = () => {
           gameboard[current[0]][current[1]] = {
             name: newShip.shipName,
             position: index,
+            isHit: newShip.body[index],
           };
           index++;
         });
@@ -51,7 +52,29 @@ const createGameboard = () => {
   };
 
   // receives attacks
-  return { gameboard, placeShip };
+  const receiveAttack = (coords) => {
+    if (gameboard[coords[0]][coords[1]] === null) {
+      gameboard[coords[0]][coords[1]] = "miss";
+    } else if (gameboard[coords[0]][coords[1]] !== "miss") {
+      ships.forEach((ship) => {
+        if (gameboard[coords[0]][coords[1]].name === ship.shipName) {
+          ship.hit(gameboard[coords[0]][coords[1]].position);
+          gameboard[coords[0]][coords[1]].isHit =
+            ship.body[gameboard[coords[0]][coords[1]].position];
+        }
+      });
+    }
+  };
+
+  // checks if all ships are sunk
+  const allSunk = () => {
+    const boolean = ships.reduce((accum, ship) => {
+      return accum && ship.isSunk();
+    }, true);
+    return boolean;
+  };
+
+  return { gameboard, placeShip, receiveAttack, allSunk };
 };
 
 export { createGameboard };

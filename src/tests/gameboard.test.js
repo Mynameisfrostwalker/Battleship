@@ -54,3 +54,35 @@ test("no multiple ships with same name", () => {
   expect(gameboard1.gameboard[0][0].name).toBe("battleship");
   expect(gameboard1.gameboard[1][0]).toBeNull();
 });
+
+test("receive attack records misses", () => {
+  const gameboard1 = createGameboard();
+  gameboard1.receiveAttack([1, 1]);
+  expect(gameboard1.gameboard[1][1]).toBe("miss");
+});
+
+test("sends hit function to correct ship", () => {
+  const gameboard1 = createGameboard();
+  gameboard1.placeShip("battleship", [1, 1]);
+  gameboard1.receiveAttack([1, 1]);
+  expect(gameboard1.gameboard[1][1].isHit).toBe(true);
+});
+
+test("all ships are sunk", () => {
+  const gameboard1 = createGameboard();
+  gameboard1.placeShip("battleship", [1, 1]);
+  gameboard1.receiveAttack([1, 1]);
+  gameboard1.placeShip("patrol boat", [2, 2], "y");
+  gameboard1.receiveAttack([2, 2]);
+  gameboard1.receiveAttack([3, 2]);
+  expect(gameboard1.allSunk()).toBe(true);
+});
+
+test("all ships are not sunk", () => {
+  const gameboard1 = createGameboard();
+  gameboard1.placeShip("battleship", [1, 1]);
+  gameboard1.receiveAttack([1, 1]);
+  gameboard1.placeShip("patrol boat", [2, 2], "y");
+  gameboard1.receiveAttack([2, 2]);
+  expect(gameboard1.allSunk()).toBe(false);
+});
