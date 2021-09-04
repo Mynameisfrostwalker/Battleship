@@ -18,6 +18,8 @@ const createGameboard = () => {
       arr.push(null);
     }
   });
+
+  // places ships on gameboard
   const placeShip = (name, coord, direction = "x") => {
     const newShip = createShip(name, ships.length + 1);
     if (ships.every((ship) => ship.shipName !== newShip.shipName)) {
@@ -36,12 +38,19 @@ const createGameboard = () => {
           return gameboard[current[0]][current[1]] === null;
         })
       ) {
+        let index = 0;
         coordinates.forEach((current) => {
-          gameboard[current[0]][current[1]] = newShip.shipName;
+          gameboard[current[0]][current[1]] = {
+            name: newShip.shipName,
+            position: index,
+          };
+          index++;
         });
       }
     }
   };
+
+  // receives attacks
   return { gameboard, placeShip };
 };
 
