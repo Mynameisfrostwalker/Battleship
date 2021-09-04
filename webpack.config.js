@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     index: "./src/scripts/index.js",
     ship: "./src/scripts/ship.js",
+    gameboard: "./src/scripts/gameboard.js",
   },
   devtool: "inline-source-map",
   plugins: [
