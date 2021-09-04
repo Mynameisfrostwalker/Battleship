@@ -3,26 +3,28 @@
 /**
  * @module Ship
  */
+// @ts-check
 
 /**
  * Ship factory function
+ * @param {string} name
  * @param {number} length
  * @return {Object} - ship object
  */
-const createShip = (length) => {
-  const lengthArray = [];
+const createShip = (name, length) => {
+  const shipBody = [];
   for (let i = 0; i < length; i++) {
-    lengthArray.push(false);
+    shipBody.push(false);
   }
   const ship = {
-    shipBody: lengthArray,
-    shipLength: lengthArray.length,
+    shipName: name,
+    shipLength: shipBody.length,
     hit(index) {
-      this.shipBody[index] = true;
+      shipBody[index] = true;
     },
     isSunk() {
-      for (let i = 0; i < this.shipBody.length; i++) {
-        if (this.shipBody[i] === false) {
+      for (let i = 0; i < shipBody.length; i++) {
+        if (shipBody[i] === false) {
           return false;
         }
       }
