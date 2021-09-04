@@ -1,8 +1,13 @@
 import { createGameboard } from "../scripts/gameboard";
 
-test("creates gameboard", () => {
+test("creates null gameboard", () => {
   const gameboard1 = createGameboard();
   expect(gameboard1.gameboard.length).toBe(10);
+  const boolean = gameboard1.gameboard.reduce((accum, curr) => {
+    const value = curr.every((item) => item === null);
+    return accum && value;
+  }, true);
+  expect(boolean).toBe(true);
 });
 
 test("places ships", () => {
