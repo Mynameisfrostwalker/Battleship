@@ -18,6 +18,7 @@ const createShip = (name, length) => {
   }
   const ship = {
     shipName: name,
+    body: shipBody,
     shipLength: shipBody.length,
     hit(index) {
       shipBody[index] = true;

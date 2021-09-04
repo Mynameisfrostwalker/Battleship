@@ -9,7 +9,13 @@ test("factory function creates ship objects of correct length", () => {
   expect(ship3.shipLength).toBe(3);
 });
 
-test("hit and is sunk function works", () => {
+test("hit function works", () => {
+  const ship = createShip("ship", 3);
+  ship.hit(1);
+  expect(ship.body[1]).toBeTruthy();
+});
+
+test("Is sunk function works", () => {
   const ship = createShip("ship", 3);
   ship.hit(0);
   expect(ship.isSunk()).toBeFalsy();
