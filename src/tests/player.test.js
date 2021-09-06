@@ -62,7 +62,7 @@ test("can not hit same coordinate twice", () => {
 test("AI can hit ships", () => {
   const player1 = createPlayer("AI");
   const enemyBoard = createGameboard();
-  enemyBoard.placeShip("battleship", [0, 0]);
+  enemyBoard.placeShip("battleship", 1, [0, 0]);
   const mathRandomSpy = jest.spyOn(Math, "random");
   mathRandomSpy.mockImplementation(() => 0);
   player1.attack(enemyBoard);
