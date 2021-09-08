@@ -64,7 +64,7 @@ const displayGame = () => {
   body.appendChild(header);
   const main = document.createElement("main");
   main.appendChild(createBoard("Player1"));
-  main.appendChild(createBoard("Player2"));
+  main.appendChild(createBoard("AI"));
   body.appendChild(main);
   tdEvent();
 };
