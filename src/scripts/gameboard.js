@@ -1,4 +1,4 @@
-import { createShip } from "../scripts/ship";
+import { createShip } from "./ship";
 
 // @ts-check
 
@@ -21,9 +21,9 @@ const createGameboard = () => {
 
   // places ships on gameboard
   const placeShip = (name, lengthOfShip, coord, direction = "x") => {
+    console.log(coord);
     const newShip = createShip(name, lengthOfShip);
     if (ships.every((ship) => ship.shipName !== newShip.shipName)) {
-      ships.push(newShip);
       const length = newShip.shipLength;
       const coordinates = [];
       for (let i = 0; i < length; i++) {
@@ -35,6 +35,9 @@ const createGameboard = () => {
       }
       if (
         coordinates.every((current) => {
+          if (current[0] > 9 || current[1] > 9) {
+            return false;
+          }
           return gameboard[current[0]][current[1]] === null;
         })
       ) {
@@ -49,6 +52,7 @@ const createGameboard = () => {
         });
       }
     }
+    ships.push(newShip);
   };
 
   // receives attacks
