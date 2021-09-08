@@ -8,6 +8,11 @@ module.exports = {
     index: "./src/scripts/index.js",
     ship: "./src/scripts/ship.js",
     gameboard: "./src/scripts/gameboard.js",
+    player: "./src/scripts/player.js",
+    gameLoop: "./src/scripts/gameLoop.js",
+    gameDisplay: "./src/scripts/gameDisplay.js",
+    events: "./src/scripts/events.js",
+    gameboardDisplay: "./src/scripts/gameboardDisplay.js",
   },
   devtool: "inline-source-map",
   plugins: [
