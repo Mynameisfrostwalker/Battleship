@@ -17,8 +17,8 @@ const createPlayer = (player = "human") => {
     return turn;
   };
 
-  const setTurn = (value) => {
-    turn = value;
+  const toggleTurn = () => {
+    turn = !turn;
   };
 
   if (player === "human") {
@@ -40,7 +40,7 @@ const createPlayer = (player = "human") => {
     };
   }
 
-  return { getTurn, setTurn, attack };
+  return { getTurn, toggleTurn, attack };
 };
 
 export { createPlayer };

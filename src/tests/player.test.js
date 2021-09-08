@@ -6,9 +6,10 @@ test("can get player turn", () => {
   expect(player1.getTurn()).toBe(true);
 });
 
-test("can get player turn", () => {
+test("can toggle player turn", () => {
   const player1 = createPlayer("human");
-  player1.setTurn(false);
+  expect(player1.getTurn()).toBe(true);
+  player1.toggleTurn();
   expect(player1.getTurn()).toBe(false);
 });
 
