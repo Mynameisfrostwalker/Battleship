@@ -21,7 +21,6 @@ const createGameboard = () => {
 
   // places ships on gameboard
   const placeShip = (name, lengthOfShip, coord, direction = "x") => {
-    console.log(coord);
     const newShip = createShip(name, lengthOfShip);
     if (ships.every((ship) => ship.shipName !== newShip.shipName)) {
       const length = newShip.shipLength;
