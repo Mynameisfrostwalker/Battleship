@@ -1,3 +1,5 @@
+import { tdEvent } from "./events";
+
 // @ts-check
 
 /**
@@ -6,13 +8,13 @@
 
 const createTableCells = (y, x, title) => {
   const td = document.createElement("td");
-  td.id = `${title}board-cell${y},${x}`;
+  td.setAttribute("data-key", `${title}`);
+  td.setAttribute("data-coords", `${JSON.stringify([y - 1, x])}`);
   return td;
 };
 
 const createTableHead = (y, x, title) => {
   const th = document.createElement("th");
-  th.id = `${title}board-cell${y},${x}`;
   if (x !== 0) {
     th.textContent = `${x}`;
   }
@@ -41,6 +43,7 @@ const createTableRows = (y, title) => {
 
 const createBoard = (title) => {
   const table = document.createElement("table");
+  table.id = title;
   const caption = document.createElement("caption");
   const h2 = document.createElement("h2");
   h2.textContent = title;
@@ -63,6 +66,7 @@ const displayGame = () => {
   main.appendChild(createBoard("Player1"));
   main.appendChild(createBoard("Player2"));
   body.appendChild(main);
+  tdEvent();
 };
 
 export { displayGame };
