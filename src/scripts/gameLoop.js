@@ -1,8 +1,13 @@
 import { createPlayer } from "./player";
 import { createGameboard } from "./gameboard";
-import { gameboardDisplay } from "./gameboardDisplay";
+import { publish, subscribe, unsubscribe } from "./pubsub";
 
 // @ts-check
+
+const player1 = createPlayer("human");
+const player2 = createPlayer("AI");
+const player1board = createGameboard();
+const player2board = createGameboard();
 
 /**
  * @module gameLoop
@@ -49,9 +54,7 @@ const aiPlaceShip = (gameboard) => {
         secondCoords.push([coord1 + i, coord2]);
       }
     }
-    console.log(secondCoords);
     if (!shareValues(coords, secondCoords)) {
-      console.log(true);
       for (let i = -1; i <= length; i++) {
         if (direction === "x") {
           coords.push([coord1, coord2 + i]);
@@ -110,21 +113,53 @@ const aiPlaceShip = (gameboard) => {
   );
 };
 
-const game = () => {
-  const player1 = createPlayer("human");
-  const player2 = createPlayer("AI");
-  const player1board = createGameboard();
-  const player2board = createGameboard();
+const gameOver = () => {
+  publish("removeCellClick");
+  if (player1board.allSunk()) {
+    publish("gameOver", "AI has won the game");
+  } else {
+    publish("gameOver", "Player1 has won the game");
+  }
+  player1board.clearShip();
+  player2board.clearShip();
+  unsubscribe("newTurn", turn);
+  subscribe("restart", game);
+  publish("newGame");
+};
+
+const turn = (coords) => {
+  player1.toggleTurn();
+  player2.toggleTurn();
+  player1.attack(player2board, coords);
+  publish("displayGameboard", player2board.gameboard, "AI");
+  if (player1board.allSunk() || player2board.allSunk()) {
+    gameOver();
+    return;
+  }
+  player2.attack(player1board);
+  publish("displayGameboard", player1board.gameboard, "Player1");
+  if (player1board.allSunk() || player2board.allSunk()) {
+    gameOver();
+  }
+};
+
+/**
+ * Starts game
+ * @callback
+ */
+function game() {
+  subscribe("newTurn", turn);
+  publish("cellClick");
+  console.log("b");
   player1board.placeShip("Carrier", 5, [0, 0], "y");
   player1board.placeShip("Battleship", 4, [7, 2], "x");
   player1board.placeShip("Cruiser", 3, [3, 6], "y");
   player1board.placeShip("Submarine", 3, [7, 9], "y");
   player1board.placeShip("Destroyer", 2, [2, 3], "x");
   aiPlaceShip(player2board);
-  gameboardDisplay(player1board.gameboard, "Player1");
-  gameboardDisplay(player2board.gameboard, "AI");
-};
+  publish("displayGameboard", player1board.gameboard, "Player1");
+  publish("displayGameboard", player2board.gameboard, "AI");
+  player1.toggleTurn();
+}
 
-const turn = (player1, plater1board, player2, player2board) => {};
-
-export { game };
+export { game, turn };
