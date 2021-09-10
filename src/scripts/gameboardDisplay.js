@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * @module gameboardDisplay
  */
@@ -15,11 +13,13 @@ const gameboardDisplay = (board, name) => {
         cell.style["background-color"] = "white";
       } else if (board[i][j] === "miss") {
         cell.style["background-color"] = "yellow";
-        cell.textContent = ".";
+        cell.textContent = "";
       } else if (!board[i][j].isHit) {
         cell.style["background-color"] = "grey";
       } else if (board[i][j].isHit) {
         cell.style["background-color"] = "red";
+      } else {
+        cell.style["background-color"] = "white";
       }
     }
   }
