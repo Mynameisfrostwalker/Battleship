@@ -1,3 +1,5 @@
+import { publish } from "./pubsub";
+
 // @ts-check
 
 /**
@@ -5,15 +7,38 @@
  */
 
 const registerCellClick = (event) => {
-  console.log(event.target.attributes["data-key"].nodeValue);
-  console.log(event.target.attributes["data-coords"].nodeValue);
+  if (event.target.attributes["data-key"].nodeValue === "AI") {
+    publish(
+      "newTurn",
+      JSON.parse(event.target.attributes["data-coords"].nodeValue)
+    );
+  }
 };
 
 const tdEvent = () => {
   const tdList = document.querySelectorAll("td");
   tdList.forEach((td) => {
-    td.addEventListener("click", registerCellClick);
+    td.addEventListener("click", registerCellClick, { once: true });
   });
 };
 
-export { tdEvent };
+const removeTdEvent = () => {
+  const tdList = document.querySelectorAll("td");
+  tdList.forEach((td) => {
+    td.removeEventListener("click", registerCellClick, { once: true });
+  });
+};
+
+const newGame = (event) => {
+  const main = document.querySelector("main");
+  main.style["opacity"] = "1";
+  event.target.parentNode.remove();
+  publish("restart");
+};
+
+const newGameEvent = () => {
+  const button = document.querySelector("button");
+  button.addEventListener("click", newGame);
+};
+
+export { tdEvent, removeTdEvent, newGameEvent };
