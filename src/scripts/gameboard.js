@@ -11,7 +11,7 @@ import { createShip } from "./ship";
  * @return {Object}
  */
 const createGameboard = () => {
-  const ships = [];
+  let ships = [];
   const gameboard = [[], [], [], [], [], [], [], [], [], []];
   gameboard.forEach((arr) => {
     for (let i = 0; i < 10; i++) {
@@ -77,7 +77,16 @@ const createGameboard = () => {
     return boolean;
   };
 
-  return { gameboard, placeShip, receiveAttack, allSunk };
+  const clearShip = () => {
+    ships = [];
+    gameboard.forEach((arr) => {
+      for (let i = 0; i < 10; i++) {
+        arr[i] = null;
+      }
+    });
+  };
+
+  return { gameboard, placeShip, receiveAttack, allSunk, clearShip };
 };
 
 export { createGameboard };

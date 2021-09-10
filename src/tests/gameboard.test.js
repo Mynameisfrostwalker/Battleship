@@ -97,3 +97,10 @@ test("all ships are not sunk", () => {
   gameboard1.receiveAttack([2, 2]);
   expect(gameboard1.allSunk()).toBe(false);
 });
+
+test("clears gameboard", () => {
+  const gameboard1 = createGameboard();
+  gameboard1.placeShip("battleship", 1, [0, 0]);
+  gameboard1.clearShip();
+  expect(gameboard1.gameboard[0][0]).toBe(null);
+});
