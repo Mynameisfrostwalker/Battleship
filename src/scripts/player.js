@@ -30,7 +30,10 @@ const createPlayer = (player = "human") => {
       const available = [];
       for (let i = 0; i < board.gameboard.length; i++) {
         for (let j = 0; j < board.gameboard[i].length; j++) {
-          if (board.gameboard[i][j] === null || !board.gameboard[i][j].isHit) {
+          if (
+            board.gameboard[i][j] === null ||
+            board.gameboard[i][j].isHit === false
+          ) {
             available.push([i, j]);
           }
         }

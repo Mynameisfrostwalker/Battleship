@@ -35,6 +35,14 @@ test("can not hit same coordinate twice", () => {
   let count = 0;
   const player1 = createPlayer("AI");
   const enemyBoard = createGameboard();
+  enemyBoard.gameboard.forEach((curr) => {
+    curr.forEach((item) => {
+      if (item !== null) {
+        count++;
+      }
+    });
+  });
+  expect(count).toBe(0);
   const mathRandomSpy = jest.spyOn(Math, "random");
   mathRandomSpy.mockImplementation(() => 0.5);
   player1.attack(enemyBoard);
@@ -45,9 +53,7 @@ test("can not hit same coordinate twice", () => {
       }
     });
   });
-  player1.attack(enemyBoard);
   expect(count).toBe(1);
-  player1.attack(enemyBoard);
   enemyBoard.gameboard.forEach((curr) => {
     curr.forEach((item) => {
       if (item !== null) {
