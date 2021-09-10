@@ -13,6 +13,7 @@ module.exports = {
     gameDisplay: "./src/scripts/gameDisplay.js",
     events: "./src/scripts/events.js",
     gameboardDisplay: "./src/scripts/gameboardDisplay.js",
+    pubsub: "./src/scripts/pubsub.js",
   },
   devtool: "inline-source-map",
   plugins: [
