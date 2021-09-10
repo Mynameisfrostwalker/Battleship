@@ -1,5 +1,3 @@
-import { tdEvent } from "./events";
-
 // @ts-check
 
 /**
@@ -66,7 +64,24 @@ const displayGame = () => {
   main.appendChild(createBoard("Player1"));
   main.appendChild(createBoard("AI"));
   body.appendChild(main);
-  tdEvent();
+  const aside = document.createElement("aside");
+  body.appendChild(aside);
 };
 
-export { displayGame };
+const displayGameOver = (message) => {
+  const body = document.querySelector("body");
+  const main = document.querySelector("main");
+  main.style["opacity"] = "0.5";
+  const card = document.createElement("div");
+  card.id = "card";
+  const cardText = document.createElement("p");
+  cardText.textContent = `${message}`;
+  card.appendChild(cardText);
+  const newGameButton = document.createElement("button");
+  newGameButton.textContent = "New Game";
+  newGameButton.classList.add("button");
+  card.appendChild(newGameButton);
+  body.appendChild(card);
+};
+
+export { displayGame, displayGameOver };
