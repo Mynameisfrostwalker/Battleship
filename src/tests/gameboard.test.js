@@ -26,8 +26,8 @@ test("places more than one ship", () => {
 
 test("does not place ship outside board", () => {
   const gameboard1 = createGameboard();
-  gameboard1.placeShip("battleship", 5, [9, 9]);
-  expect(gameboard1.gameboard[9][9]).toBe(null);
+  gameboard1.placeShip("battleship", 5, [7, 7]);
+  expect(gameboard1.gameboard[7][7]).toBe(null);
 });
 
 test("places ships vertically", () => {

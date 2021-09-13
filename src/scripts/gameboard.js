@@ -19,10 +19,23 @@ const createGameboard = () => {
     }
   });
 
+  const shareValues = (bigArr, arr) => {
+    for (let i = 0; i < bigArr.length; i++) {
+      const current = bigArr[i];
+      for (let j = 0; j < arr.length; j++) {
+        const smallCurrent = arr[j];
+        if (current.shipName === smallCurrent.shipName) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   // places ships on gameboard
   const placeShip = (name, lengthOfShip, coord, direction = "x") => {
     const newShip = createShip(name, lengthOfShip);
-    if (ships.every((ship) => ship.shipName !== newShip.shipName)) {
+    if (!shareValues(ships, [newShip])) {
       const length = newShip.shipLength;
       const coordinates = [];
       for (let i = 0; i < length; i++) {
@@ -49,9 +62,9 @@ const createGameboard = () => {
           };
           index++;
         });
+        ships.push(newShip);
       }
     }
-    ships.push(newShip);
   };
 
   // receives attacks
