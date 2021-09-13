@@ -1,10 +1,15 @@
 import "../styles/reset.css";
 import "../styles/main.css";
-import { displayGame } from "./gameDisplay";
-import { game } from "./gameLoop";
+import { displayGame, newDragBox } from "./gameDisplay";
+import { game, setUp } from "./gameLoop";
 import { gameboardDisplay } from "./gameboardDisplay";
 import { subscribe } from "./pubsub";
-import { tdEvent, removeTdEvent, newGameEvent } from "./events";
+import {
+  tdEvent,
+  removeTdEvent,
+  newGameEvent,
+  toggleDirectionEvent,
+} from "./events";
 import { displayGameOver } from "./gameDisplay";
 
 // @ts-check
@@ -14,7 +19,11 @@ import { displayGameOver } from "./gameDisplay";
  * @author Frostwalker
  */
 
+subscribe("toggleEvent", toggleDirectionEvent);
+
 displayGame();
+
+subscribe("setUp", setUp);
 
 subscribe("cellClick", tdEvent);
 
@@ -25,5 +34,7 @@ subscribe("displayGameboard", gameboardDisplay);
 subscribe("gameOver", displayGameOver);
 
 subscribe("newGame", newGameEvent);
+
+subscribe("restart", newDragBox);
 
 game();

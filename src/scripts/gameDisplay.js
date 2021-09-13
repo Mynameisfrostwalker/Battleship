@@ -1,3 +1,5 @@
+import { publish } from "./pubsub";
+
 // @ts-check
 
 /**
@@ -53,6 +55,20 @@ const createBoard = (title) => {
   return table;
 };
 
+const createDiv = (length) => {
+  const mainDiv = document.createElement("div");
+  mainDiv.id = "Ship";
+  mainDiv.setAttribute("draggable", "true");
+  mainDiv.setAttribute("data-direction", "y");
+  for (let i = 0; i < length; i++) {
+    const box = document.createElement("div");
+    box.className = "division";
+    box.id = `${i}`;
+    mainDiv.appendChild(box);
+  }
+  return mainDiv;
+};
+
 const displayGame = () => {
   const body = document.querySelector("body");
   const header = document.createElement("header");
@@ -65,7 +81,14 @@ const displayGame = () => {
   main.appendChild(createBoard("AI"));
   body.appendChild(main);
   const aside = document.createElement("aside");
+  aside.appendChild(createDiv(5));
+  const button = document.createElement("button");
+  button.id = "toggle";
+  button.textContent = "Change Axis";
+  aside.appendChild(button);
+  button.classList.add("button");
   body.appendChild(aside);
+  publish("toggleEvent");
 };
 
 const displayGameOver = (message) => {
@@ -79,9 +102,23 @@ const displayGameOver = (message) => {
   card.appendChild(cardText);
   const newGameButton = document.createElement("button");
   newGameButton.textContent = "New Game";
+  newGameButton.id = "newGame";
   newGameButton.classList.add("button");
   card.appendChild(newGameButton);
   body.appendChild(card);
 };
 
-export { displayGame, displayGameOver };
+const newDragBox = () => {
+  const body = document.querySelector("body");
+  const aside = document.createElement("aside");
+  aside.appendChild(createDiv(5));
+  const button = document.createElement("button");
+  button.id = "toggle";
+  button.textContent = "Change Axis";
+  aside.appendChild(button);
+  button.classList.add("button");
+  body.appendChild(aside);
+  publish("toggleEvent");
+};
+
+export { displayGame, displayGameOver, createDiv, newDragBox };

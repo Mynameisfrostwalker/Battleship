@@ -8,6 +8,8 @@ const player1 = createPlayer("human");
 const player2 = createPlayer("AI");
 const player1board = createGameboard();
 const player2board = createGameboard();
+let arr = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer"];
+let ships = [];
 
 /**
  * @module gameLoop
@@ -149,17 +151,46 @@ const turn = (coords) => {
  */
 function game() {
   subscribe("newTurn", turn);
-  publish("cellClick");
-  console.log("b");
-  player1board.placeShip("Carrier", 5, [0, 0], "y");
-  player1board.placeShip("Battleship", 4, [7, 2], "x");
-  player1board.placeShip("Cruiser", 3, [3, 6], "y");
-  player1board.placeShip("Submarine", 3, [7, 9], "y");
-  player1board.placeShip("Destroyer", 2, [2, 3], "x");
   aiPlaceShip(player2board);
   publish("displayGameboard", player1board.gameboard, "Player1");
   publish("displayGameboard", player2board.gameboard, "AI");
   player1.toggleTurn();
 }
 
-export { game, turn };
+const setUp = (length, coord, dir, element) => {
+  const newCoord = [...coord];
+  if (dir === "y") {
+    newCoord[0] = newCoord[0] - element;
+    player1board.placeShip(arr[0], length, newCoord, dir);
+  } else {
+    newCoord[1] = newCoord[1] - element;
+    player1board.placeShip(arr[0], length, newCoord, dir);
+  }
+  publish("displayGameboard", player1board.gameboard, "Player1");
+  arr.shift();
+  if (arr.length === 0) {
+    arr = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer"];
+    publish("cellClick");
+  }
+};
+
+const areShipsPlaced = (no) => {
+  if (ships.length > 4) {
+    ships = [];
+  }
+  player1board.gameboard.forEach((row) => {
+    row.forEach((cell) => {
+      if ((cell !== null) & (cell !== "miss")) {
+        if (!shareValues(ships, [cell.name])) {
+          ships.push(cell.name);
+        }
+      }
+    });
+  });
+  if (ships.length === no) {
+    return true;
+  }
+  return false;
+};
+
+export { game, turn, setUp, areShipsPlaced };

@@ -44,7 +44,7 @@ const unsubscribe = function (eventName, fn) {
 const publish = function (eventName, ...data) {
   if (events[eventName]) {
     events[eventName].forEach(function (fn) {
-      fn(data[0], data[1]);
+      fn(data[0], data[1], data[2], data[3]);
     });
   }
 };
