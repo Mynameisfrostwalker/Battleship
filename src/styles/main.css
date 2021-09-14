@@ -132,3 +132,9 @@ aside {
 .flexer div:last-child {
     border-right: 3px solid black !important;
 }
+
+@media screen and (max-width: 500px) {
+    table {
+        margin-left: 1rem;
+    }
+}
