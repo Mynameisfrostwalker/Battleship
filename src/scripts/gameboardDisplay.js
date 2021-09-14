@@ -2,6 +2,11 @@
  * @module gameboardDisplay
  */
 
+/**
+ * displays gameboard
+ * @param {Object} board -board to diplay
+ * @param {string} name - name of board
+ */
 const gameboardDisplay = (board, name) => {
   const table = document.querySelector(`#${name}`);
   for (let i = 0; i < board.length; i++) {
