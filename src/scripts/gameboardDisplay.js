@@ -14,7 +14,7 @@ const gameboardDisplay = (board, name) => {
       } else if (board[i][j] === "miss") {
         cell.style["background-color"] = "yellow";
         cell.textContent = "";
-      } else if (!board[i][j].isHit) {
+      } else if (!board[i][j].isHit && name === "Player1") {
         cell.style["background-color"] = "grey";
       } else if (board[i][j].isHit) {
         cell.style["background-color"] = "red";
